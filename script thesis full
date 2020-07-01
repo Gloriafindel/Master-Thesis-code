@@ -1,0 +1,1023 @@
+##############################CODE MASTER THESIS GV########################################
+#aragorn = df with the 190 subjects
+#dfthesis = equivalent aragogn but without those subjects with NAs on pam/ACEs
+##########################################################################################
+
+
+#Calculating PFC
+#dfthesis$PFCT <- (dfthesis$L_superiorfrontal_thickavg*dfthesis$L_superiorfrontal_surfavg + dfthesis$L_medialorbitofrontal_thickavg*dfthesis$L_medialorbitofrontal_surfavg + dfthesis$L_caudalmiddlefrontal_thickavg*dfthesis$L_caudalmiddlefrontal_surfavg + dfthesis$L_rostralmiddlefrontal_thickavg*dfthesis$L_rostralmiddlefrontal_surfavg + dfthesis$L_parsopercularis_thickavg*dfthesis$L_parsopercularis_surfavg + dfthesis$L_parstriangularis_thickavg*dfthesis$L_parstriangularis_surfavg + dfthesis$L_parsorbitalis_thickavg*dfthesis$L_parsorbitalis_surfavg + dfthesis$L_lateralorbitofrontal_thickavg*dfthesis$L_lateralorbitofrontal_surfavg + dfthesis$L_medialorbitofrontal_thickavg*dfthesis$L_medialorbitofrontal_surfavg + dfthesis$L_frontalpole_thickavg*dfthesis$L_frontalpole_surfavg + dfthesis$L_rostralanteriorcingulate_thickavg*dfthesis$L_rostralanteriorcingulate_surfavg + dfthesis$L_caudalanteriorcingulate_thickavg*dfthesis$L_caudalanteriorcingulate_surfavg + dfthesis$R_superiorfrontal_thickavg*dfthesis$R_superiorfrontal_surfavg + dfthesis$R_medialorbitofrontal_thickavg*dfthesis$R_medialorbitofrontal_surfavg + dfthesis$R_caudalmiddlefrontal_thickavg*dfthesis$R_caudalmiddlefrontal_surfavg + dfthesis$R_rostralmiddlefrontal_thickavg*dfthesis$R_rostralmiddlefrontal_surfavg + dfthesis$R_parsopercularis_thickavg*dfthesis$R_parsopercularis_surfavg + dfthesis$R_parstriangularis_thickavg*dfthesis$R_parstriangularis_surfavg + dfthesis$R_parsorbitalis_thickavg*dfthesis$R_parsorbitalis_surfavg + dfthesis$R_lateralorbitofrontal_thickavg*dfthesis$R_lateralorbitofrontal_surfavg + dfthesis$R_medialorbitofrontal_thickavg*dfthesis$R_medialorbitofrontal_surfavg + dfthesis$R_frontalpole_thickavg*dfthesis$R_frontalpole_surfavg + dfthesis$R_rostralanteriorcingulate_thickavg*dfthesis$R_rostralanteriorcingulate_surfavg + dfthesis$R_caudalanteriorcingulate_thickavg*dfthesis$R_caudalanteriorcingulate_surfavg)/(dfthesis$R_medialorbitofrontal_surfavg + dfthesis$L_medialorbitofrontal_surfavg + dfthesis$R_rostralanteriorcingulate_surfavg + dfthesis$L_rostralanteriorcingulate_surfavg + dfthesis$R_caudalanteriorcingulate_surfavg + dfthesis$L_caudalanteriorcingulate_surfavg + dfthesis$R_medialorbitofrontal_surfavg + dfthesis$L_medialorbitofrontal_surfavg + dfthesis$R_superiorfrontal_surfavg + dfthesis$L_superiorfrontal_surfavg + dfthesis$R_caudalmiddlefrontal_surfavg + dfthesis$L_caudalmiddlefrontal_surfavg + dfthesis$R_rostralmiddlefrontal_surfavg + dfthesis$L_rostralmiddlefrontal_surfavg + dfthesis$R_parsopercularis_surfavg + dfthesis$L_parsopercularis_surfavg + dfthesis$R_parsopercularis_surfavg + dfthesis$L_parstriangularis_surfavg + dfthesis$R_parstriangularis_surfavg + dfthesis$L_parsorbitalis_surfavg + dfthesis$R_parsorbitalis_surfavg + dfthesis$R_lateralorbitofrontal_surfavg + dfthesis$L_lateralorbitofrontal_surfavg + dfthesis$L_frontalpole_surfavg + dfthesis$R_frontalpole_surfavg )
+
+#Calculating GCT  
+#dfthesis$Global_Thickness <- (dfthesis$LSurfArea * dfthesis$LThickness + dfthesis$RSurfArea * dfthesis$RThickness) / (dfthesis$LSurfArea + dfthesis$RSurfArea)
+
+#############################################################################################
+#Questionnaires computations:
+#############################################################################################
+
+#PAM QUESTIONNAIRE Following "Berry, Wearden, Barrowclough (2007)"
+
+library(car)
+#dfthesis$PAM_2rever <- recode(dfthesis$PAM_2_baseline, "0=3; 1=2; 2=1; 3=0")
+#dfthesis$PAM_4rever <- recode(dfthesis$PAM_4_baseline, "0=3; 1=2; 2=1; 3=0")
+#dfthesis$PAM_9rever <- recode(dfthesis$PAM_9_baseline, "0=3; 1=2; 2=1; 3=0")
+
+#dfthesis$pamanxiety <- (dfthesis$PAM_3_baseline + dfthesis$PAM_5_baseline + dfthesis$PAM_6_baseline + dfthesis$PAM_7_baseline + dfthesis$PAM_10_baseline + dfthesis$PAM_12_baseline + dfthesis$PAM_14_baseline + dfthesis$PAM_15_baseline)/8
+#dfthesis$pamavoidance <- (dfthesis$PAM_1_baseline + dfthesis$PAM_2rever + dfthesis$PAM_4rever + dfthesis$PAM_8_baseline + dfthesis$PAM_9rever + dfthesis$PAM_11_baseline + dfthesis$PAM_13_baseline + dfthesis$PAM_16_baseline)/8
+#dfthesis$pamtot <- (dfthesis$pamanxiety + dfthesis$pamavoidance)
+
+#ACEs QUESTIONNAIRE
+#dfthesis$ace1 <- ifelse(test=dfthesis$ACES_Q1_baseline  > "2", yes= "1", no="0") #calculating ACES EM.ABUSE Q
+#dfthesis$ace2 <- ifelse(test=dfthesis$ACES_Q2_baseline  > "1", yes= "1", no="0") #calculating ACES EM.ABUSE Q
+#dfthesis$ace1 <- as.numeric(dfthesis$ace1)
+#dfthesis$ace2 <- as.numeric(dfthesis$ace2)
+#dfthesis$ACEsEmAb <- (dfthesis$ace1 + dfthesis$ace2) #calculating ACES EM.ABUSE TOT
+#which(dfthesis$ACEsEmAb >2)
+
+#dfthesis$ACEsEmAb <- recode(dfthesis$ACEsEmAb, "0=0; 1=1; 2=1")
+
+#dfthesis$ace3 <- ifelse(test=dfthesis$ACES_Q3_baseline  > "1", yes= "1", no="0") #calculating ACES PHYS.ABUSE Q
+#dfthesis$ace4 <- ifelse(test=dfthesis$ACES_Q4_baseline  > "0", yes= "1", no="0")#calculating ACES PHYS.ABUSE Q
+#dfthesis$ace3 <- as.numeric(dfthesis$ace3)
+#dfthesis$ace4 <- as.numeric(dfthesis$ace4)
+#dfthesis$ACEsPhysAb <- (dfthesis$ace3 + dfthesis$ace4) #calculating ACES PHYS.ABUSE TOT
+#which(dfthesis$ACEsPhysAb >2)
+
+library(car)
+#dfthesis$ACEsPhysAb <- recode(dfthesis$ACEsPhysAb, "0=0; 1=1; 2=1")
+
+#dfthesis$ACEsSexAb <- (dfthesis$ACES_Q5_baseline + dfthesis$ACES_Q6_baseline + dfthesis$ACES_Q7_baseline + dfthesis$ACES_Q8_baseline) #calculating ACES SEX.ABUSE 
+#dfthesis$ACEsSexAb <- recode(dfthesis$ACEsSexAb, "0=0; 1=1; 2=1; 3=1; 4=1")
+
+#dfthesis$ACEsSubAb <- (dfthesis$ACES_Q9_baseline + dfthesis$ACES_Q10_baseline) #calculating ACES SUBS.ABUSE 
+#dfthesis$ACEsSubAb <- ifelse(test=dfthesis$ACEsSubAb  > "0", yes= "1", no="0")
+#dfthesis$ACEsSubAb <- as.numeric(dfthesis$ACEsSubAb)
+
+#dfthesis$ACEsMentIll <- (dfthesis$ACES_Q11_baseline + dfthesis$ACES_Q12_baseline) #calculating ACES MENTAL ILL IN FAMILY
+#dfthesis$ACEsMentIll <- ifelse(test=dfthesis$ACEsMentIll   > "0", yes= "1", no="0")
+#dfthesis$ACEsMentIll <- as.numeric(dfthesis$ACEsMentIll)
+
+#dfthesis$ace13 <- ifelse(test=dfthesis$ACES_Q13_baseline  > "1", yes= "1", no="0") #calculating ACES BATTERED MOTHER
+#dfthesis$ace14 <- ifelse(test=dfthesis$ACES_Q14_baseline  > "1", yes= "1", no="0")
+#dfthesis$ace15 <- ifelse(test=dfthesis$ACES_Q15_baseline  > "0", yes= "1", no="0") 
+#dfthesis$ace16 <- ifelse(test=dfthesis$ACES_Q16_baseline  > "0", yes= "1", no="0")
+#dfthesis$ace13 <- as.numeric(dfthesis$ace13)
+#dfthesis$ace14 <- as.numeric(dfthesis$ace14)
+#dfthesis$ace15 <- as.numeric(dfthesis$ace15)
+#dfthesis$ace16 <- as.numeric(dfthesis$ace16)
+#dfthesis$ACEsBattMum <- (dfthesis$ace13 + dfthesis$ace14 + dfthesis$ace15 + dfthesis$ace16)
+#dfthesis$ACEsBattMum <- ifelse(test=dfthesis$ACEsBattMum   > "0", yes= "1", no="0")
+#dfthesis$ACEsBattMum <- as.numeric(dfthesis$ACEsBattMum)
+
+#dfthesis$ACEsIncRel <- (dfthesis$ACES_Q17_baseline)#calculating ACES Incarcerated Relative
+#dfthesis$ACEsIncRel <- ifelse(test=dfthesis$ACEsIncRel  > "0", yes= "1", no="0") 
+#dfthesis$ACEsIncRel <- as.numeric(dfthesis$ACEsIncRel)
+
+#dfthesis$ACEsDiv <- (dfthesis$ACES_Q18_baseline)#calculating ACES Divorce
+#dfthesis$ACEsDiv <- ifelse(test=dfthesis$ACEsDiv  > "0", yes= "1", no="0") 
+#dfthesis$ACEsDiv <- as.numeric(dfthesis$ACEsDiv)
+
+#dfthesis$ace19 <- ifelse(test=dfthesis$ACES_Q19_baseline  > "1", yes= "1", no="0") #calculating ACES PHYS NEGLECT
+#dfthesis$ace20 <- ifelse(test=dfthesis$ACES_Q20_baseline  > "1", yes= "1", no="0")
+#dfthesis$ace21 <- ifelse(test=dfthesis$ACES_Q21_baseline  > "3", yes= "0", no="1") #reversed item
+#dfthesis$ace22 <- ifelse(test=dfthesis$ACES_Q22_baseline  > "1", yes= "1", no="0")
+#dfthesis$ace19 <- as.numeric(dfthesis$ace19)
+#dfthesis$ace20 <- as.numeric(dfthesis$ace20)
+#dfthesis$ace21 <- as.numeric(dfthesis$ace21)
+#dfthesis$ace22 <- as.numeric(dfthesis$ace22)
+#dfthesis$ACEsPhysNeg <- (dfthesis$ace19 + dfthesis$ace20 + dfthesis$ace21 + dfthesis$ace22)
+#dfthesis$ACEsPhysNeg <- ifelse(test=dfthesis$ACEsPhysNeg   > "0", yes= "1", no="0")
+#dfthesis$ACEsPhysNeg <- as.numeric(dfthesis$ACEsPhysNeg)
+
+library(car)
+#dfthesis$ACES_Q23RECOD<- recode(dfthesis$ACES_Q23_baseline, "0=0; 1=0; 2=1; 3=2; 4=3") #caculating EM NEGLECT
+#dfthesis$ACES_Q24RECOD<- recode(dfthesis$ACES_Q24_baseline, "0=0; 1=0; 2=1; 3=2; 4=3")
+#dfthesis$ACES_Q25RECOD<- recode(dfthesis$ACES_Q25_baseline, "0=0; 1=0; 2=1; 3=2; 4=3")
+
+#dfthesis$ACESRawEmNeg<- (dfthesis$ACES_Q23RECOD + dfthesis$ACES_Q25RECOD + dfthesis$ACES_Q24RECOD) 
+#dfthesis$ACEsEmNeg <- recode(dfthesis$ACESRawEmNeg, "0=1; 1=1; 2=1; 3=1; 4=0; 5=0; 6=0; 7=0; 8=0; 9=0")
+
+#dfthesis$ACEsTot<- (dfthesis$ACEsEmAb + dfthesis$ACEsPhysAb + dfthesis$ACEsSexAb + dfthesis$ACEsMentIll + dfthesis$ACEsSubAb + dfthesis$ACEsBattMum + dfthesis$ACEsIncRel + dfthesis$ACEsDiv + dfthesis$ACEsPhysNeg + dfthesis$ACEsEmNeg)
+
+
+####################################################################
+#Descriptives
+####################################################################
+
+sumGCT = summary(dfthesis$Global_Thickness)
+sumPFCT = summary(dfthesis$PFCT)
+sdPFCT= sd(dfthesis$PFCT)
+sdGCT = sd(dfthesis$Global_Thickness)
+
+sumACEsTot = summary(dfthesis$ACEsTot)
+sumpamtot = summary(dfthesis$pamtot)
+sdACEs = sd(dfthesis$ACEsTot)
+sdpamtot = sd(dfthesis$ACEsTot)
+
+#######################
+#Descriptives CT
+#######################
+
+library(dplyr)
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+descript <-
+  list(
+    "GCT" =
+      list(
+        "mean (sd)" = ~qwraps2::mean_sd(Global_Thickness, na_rm = TRUE),
+        "median (Q1, Q3)" = ~qwraps2::median_iqr(Global_Thickness, na_rm = TRUE),
+        "min" = ~min(Global_Thickness, na.rm = TRUE),
+        "max" = ~max(Global_Thickness, na.rm = TRUE),
+        "Missing" = ~sum(is.na(Global_Thickness))
+      ),
+    "PFCT" =
+      list(
+        "mean (sd)" = ~qwraps2::mean_sd(PFCT, na_rm = TRUE),
+        "median (Q1, Q3)" = ~qwraps2::median_iqr(PFCT, na_rm = TRUE),
+        "min" = ~min(PFCT, na.rm = TRUE),
+        "max" = ~max(PFCT, na.rm = TRUE),
+        "Missing" = ~sum(is.na(PFCT))
+      ))
+
+des1<- summary_table(
+  dplyr::Group_by(aragorn, Group),  
+  descript)
+des2<- summary_table(aragorn, descript)
+ctgr<- cbind(des1, des2)
+ctgr
+View(ctgr)
+
+#######################
+#Descriptives PAM ACEs
+#######################
+
+library(dplyr)
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+sumstat <-
+  list(
+    "PAM total score" =
+      list(
+        "mean (sd)" = ~qwraps2::mean_sd(pamtot, na_rm = TRUE),
+        "median (Q1, Q3)" = ~qwraps2::median_iqr(pamtot, na_rm = TRUE),
+        "min" = ~min(pamtot, na.rm = TRUE),
+        "max" = ~max(pamtot, na.rm = TRUE),
+        "Missing" = ~sum(is.na(pamtot))
+      ),
+    "Anxiety Subscale" =
+      list(
+        "mean (sd)" = ~qwraps2::mean_sd(pamanxiety, na_rm = TRUE),
+        "median (Q1, Q3)" = ~qwraps2::median_iqr(pamanxiety, na_rm = TRUE),
+        "min" = ~min(pamanxiety, na.rm = TRUE),
+        "max" = ~max(pamanxiety, na.rm = TRUE),
+        "Missing" = ~sum(is.na(pamanxiety))
+      ),
+    "Avoidance Subscale" =
+      list(
+        "mean (sd)" = ~qwraps2::mean_sd(pamavoidance, na_rm = TRUE),
+        "median (Q1, Q3)" = ~qwraps2::median_iqr(pamavoidance, na_rm = TRUE),
+        "min" = ~min(pamavoidance, na.rm = TRUE),
+        "max" = ~max(pamavoidance, na.rm = TRUE),
+        "Missing" = ~sum(is.na(pamavoidance))
+      ),
+    "ACEs Total" =
+      list(
+        "mean (sd)" = ~qwraps2::mean_sd(ACEsTot, na_rm = TRUE),
+        "median (Q1, Q3)" = ~qwraps2::median_iqr(ACEsTot, na_rm = TRUE),
+        "min" = ~min(ACEsTot, na.rm = TRUE),
+        "max" = ~max(ACEsTot, na.rm = TRUE),
+        "Missing" = ~sum(is.na(ACEsTot))
+      ),
+    "Emotional Abuse" =
+      list("Yes" = ~qwraps2::n_perc0(ACEsEmAb == 1, na_rm = TRUE),
+           "No"  = ~qwraps2::n_perc0(ACEsEmAb == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsEmAb))),
+    "Physical Abuse" =
+      list("Yes" = ~qwraps2::n_perc0(ACEsPhysAb == 1, na_rm = TRUE),
+           "No"  = ~qwraps2::n_perc0(ACEsPhysAb == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsPhysAb))),
+    "Emotional Neglect" =
+      list("Yes" = ~qwraps2::n_perc0(ACEsEmNeg == 1, na_rm = TRUE),
+           "No"  = ~qwraps2::n_perc0(ACEsEmNeg == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsEmNeg))),
+    "Physical Neglect" =
+      list("Yes" = ~qwraps2::n_perc0(ACEsPhysNeg == 1, na_rm = TRUE),
+           "No"  = ~qwraps2::n_perc0(ACEsPhysNeg == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsPhysNeg))),
+    "Substance Abuse" =
+      list("Yes"= ~qwraps2::n_perc0(ACEsSubAb == 1, na_rm = TRUE),
+           "No" = ~qwraps2::n_perc0(ACEsSubAb == 0, na_rm = TRUE),
+           "Missing"= ~sum(is.na(ACEsSubAb))),
+    "Sexual Abuse" =
+      list("Yes" = ~qwraps2::n_perc0(ACEsSexAb == 1, na_rm = TRUE),
+           "No"  = ~qwraps2::n_perc0(ACEsSexAb == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsSexAb))),
+    "Mental Illness" =
+      list("Yes" = ~qwraps2::n_perc0(ACEsMentIll == 1, na_rm = TRUE),
+           "No"  = ~qwraps2::n_perc0(ACEsMentIll == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsPhysAb))),
+    "Battered Mother" =
+      list("Yes" = ~ qwraps2::n_perc0(ACEsBattMum == 1, na_rm = TRUE),
+           "No" = ~ qwraps2::n_perc0(ACEsBattMum == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsBattMum))),
+    "Incarcereted Relative" =
+      list("Yes" = ~ qwraps2::n_perc0(ACEsIncRel == 1, na_rm = TRUE),
+           "No" = ~ qwraps2::n_perc0(ACEsIncRel == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsIncRel))),
+    "Divorced Parents" =
+      list("Yes" = ~ qwraps2::n_perc0(ACEsDiv == 1, na_rm = TRUE),
+           "No" = ~ qwraps2::n_perc0(ACEsDiv == 0, na_rm = TRUE),
+           "Missing" = ~sum(is.na(ACEsDiv)))
+  )
+
+byGroupquest<- summary_table(
+  dplyr::Group_by(dfthesis, Group),
+  sumstat)
+sumquest<- summary_table(dfthesis, sumstat)
+questGroup<- cbind(byGroupquest,sumquest)
+questGroup
+View(questGroup)
+
+####################################################################
+#INSPECT data for normality test
+####################################################################
+
+#Shapiro
+
+swCT <- with(dfthesis, shapiro.test(Global_Thickness))
+swCT
+swCT_CHR <- with(dfthesis, shapiro.test(Global_Thickness[Group == "CHR"]))
+swCT_CHR
+swCT_CONTROL <- with(dfthesis, shapiro.test(Global_Thickness[Group == "CONTROL"]))
+swCT_CONTROL
+
+swACEs_CHR <- with(dfthesis, shapiro.test(ACEsTot[Group == "CHR"]))
+swACEs_CHR
+swACEs_CONTROL <- with(dfthesis, shapiro.test(ACEsTot[Group == "CONTROL"]))
+swACEs_CONTROL
+
+swPAM_CHR <- with(dfthesis, shapiro.test(pamtot[Group == "CHR"]))
+swPAM_CHR
+swPAM_CONTROL <- with(dfthesis, shapiro.test(pamtot[Group == "CONTROL"]))
+swPAM_CONTROL
+
+swPCT <- with(dfthesis, shapiro.test(PFCT))
+swPCT
+swPCT_CHR <- with(dfthesis, shapiro.test(PFCT[Group == "CHR"]))
+swPCT_CHR
+swPCT_CONTROL <- with(dfthesis, shapiro.test(PFCT[Group == "CONTROL"]))
+swPCT_CONTROL
+
+#QQPlots
+
+library(ggplot2)
+library(ggpubr)
+
+q1<-qplot(sample = Global_Thickness, data = dfthesis) +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="QQplot GCT", x= "theoretical", y= "GCT") 
+q2<-qplot(sample = Global_Thickness, data = dfthesis, color=Group) +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="QQplot GCT by Group", x= "theoretical", y= "GCT")
+
+q3<-qplot(sample = PFCT, data = dfthesis) +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="QQplot PFCT", x= "theoretical", y= "PFCT") 
+
+q4<-qplot(sample = PFCT, data = dfthesis, color=Group) +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="QQplot PFCT by Group", x= "theoretical", y= "PFCT")
+
+ggarrange(q1, q2, q3, q4 + rremove("x.text"), 
+          ncol = 2, nrow = 2)
+
+
+###################################################################################################################
+#PLOTS
+###################################################################################################################
+
+########################
+#BOXPLOTS
+########################
+
+library(ggplot2)
+bpGCT <-ggplot(dfthesis, aes(x=Group, y=Global_Thickness, fill=Group)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="A",x="Group", y = "GCT")
+
+library(ggplot2)
+bpPFC <-ggplot(dfthesis, aes(x=Group, y=PFCT, fill=Group)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="B",x="Group", y = "PFCT")
+
+ggarrange(bpGCT, bpPFC + rremove("x.text"), 
+          common.legend= TRUE,
+          legend = "right",
+          ncol = 2, nrow = 1)
+
+
+##########################
+#Histograms Density plot
+##########################
+
+#HISTOGRAMS across Groups
+library(ggplot2)
+h1<-ggplot(dfthesis, aes(x=Global_Thickness)) +
+  geom_histogram(aes(y=..density..), position="identity", alpha=0.5)+
+  geom_density(alpha=0.2)+
+  labs(title="GCT across Groups", x="GCT")+
+  theme_classic()
+
+h2<-ggplot(dfthesis, aes(x=PFCT)) +
+  geom_histogram(aes(y=..density..), position="identity", alpha=0.5)+
+  geom_density(alpha=0.2)+
+  labs(title="PFC across Groups", x="PFCT")+
+  theme_classic()
+
+#HISTOGRAMS by Group
+
+#HISTOGRAMS GCT
+library(plyr)
+me <- ddply(dfthesis, "Group", summarise, grp.mean=mean(Global_Thickness)) #mean by Group to use in histogram
+head(me) 
+library(jcolors)
+h3<-ggplot(dfthesis, aes(x=Global_Thickness, color=Group, fill=Group)) +
+  geom_histogram(aes(y=..density..), position="identity", alpha=0.5)+
+  geom_density(alpha=0.2)+
+  geom_vline(data=me, aes(xintercept=grp.mean, color=Group),
+             linetype="dashed")+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="GCT by Group",x="GCT")+
+  theme_classic()
+
+ggarrange(h1, h3, q1, q2 + rremove("x.text"), 
+          common.legend = FALSE, legend = "right",
+          labels = c("A", "B", "C", "D"),
+          ncol = 2, nrow = 2)
+
+#HISTOGRAMS PFCT
+me4 <- ddply(dfthesis, "Group", summarise, grp.mean=mean(PFCT)) #mean by Group to use in histogram
+head(me4) 
+
+h4<-ggplot(dfthesis, aes(x=PFCT, color=Group, fill=Group)) +
+  geom_histogram(aes(y=..density..), position="identity", alpha=0.5)+
+  geom_density(alpha=0.2)+
+  geom_vline(data=me4, aes(xintercept=grp.mean, color=Group),
+             linetype="dashed")+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="PFCT by Group",x="PFCT")+
+  theme_classic()
+
+ggarrange(h2, h4, q3, q4 + rremove("x.text"), 
+          common.legend = FALSE, legend = "right",
+          labels = c("A", "B", "C", "D"),
+          ncol = 2, nrow = 2)
+
+#Histograms PAM and ACES
+
+library(plyr)
+me2 <- ddply(dfthesis, "Group", summarise, grp.mean2=mean(pamtot, na.rm = TRUE))
+head(me2)
+library(ggplot2)
+library(jcolors)
+ggplot(dfthesis, aes(x=pamtot, color=Group, fill=Group)) +
+  geom_histogram(aes(y=..density..), position="identity", alpha=0.5)+
+  geom_density(alpha=0.2)+
+  geom_vline(data=mu2, aes(xintercept=grp.mean2, color=Group),
+             linetype="dashed")+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="Psychosis Attachment Measure Total Score",x="PAM totalscore", y = "Density")+
+  theme_classic()
+
+library(plyr)
+me3 <- ddply(dfthesis, "Group", summarise, grp.mean3=mean(ACEsTot, na.rm = TRUE))
+head(me3)
+library(ggplot2)
+library(jcolors)
+ggplot(dfthesis, aes(x=ACEsTot, color=Group, fill=Group)) +
+  geom_histogram(aes(y=..density..), position="identity", alpha=0.5)+
+  geom_density(alpha=0.2)+
+  geom_vline(data=mu3, aes(xintercept=grp.mean3, color=Group),
+             linetype="dashed")+
+  stat_bin(bins = 10)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="Adverese Childhood Experiences",x="ACEs Total Score", y = "Density")+
+  theme_classic()
+
+#Boxplots PAM ACEs
+library(ggplot2)
+library(jcolors)
+bpa1 <-ggplot(dfthesis, aes(x=Group, y=pamtot, fill=Group)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="A",x="Group", y = "PAM total score")
+
+bpa2 <-ggplot(dfthesis, aes(x=Group, y=pamavoidance, fill=Group)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="B",x="Group", y = "avoidance") 
+
+bpa3 <-ggplot(dfthesis, aes(x=Group, y=pamanxiety, fill=Group)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="C",x="Group", y = "anxiety") 
+
+bpac <-ggplot(dfthesis, aes(x=Group, y=ACEsTot, fill=Group)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="D",x="Group", y = "ACEs") 
+
+ggarrange(bpa1, bpa2, bpa3, bpac + rremove("x.text"), 
+          common.legend = TRUE, legend = "right",
+          ncol = 2, nrow = 2)
+
+#Shapiro Test for Normality PAM/ACEs
+swPAM_CHR <- with(dfthesis, shapiro.test(pamtot[Group == "CHR"]))
+swPAM_CHR
+swPAM_CONTROL<- with(dfthesis, shapiro.test(pamtot[Group == "CONTROL"])) 
+swPAM_CONTROL
+swACEs_CHR <- with(dfthesis, shapiro.test(ACEsTot[Group == "CHR"]))
+swACEs_CHR
+swACEs_CONTROL <-with(dfthesis, shapiro.test(ACEsTot[Group == "CONTROL"])) 
+swACEs_CONTROL
+
+####################################################################
+#Differences PAM and ACEs questionnaires by Group
+####################################################################
+#Logarithmic transformation subscales
+library(e1071)
+dfthesis$emneglog = log1p(dfthesis$ACEsEmNeg)
+skewness(dfthesis$emneglog)
+dfthesis$emablog = log1p(dfthesis$ACEsEmAb)
+skewness(dfthesis$emablog)
+dfthesis$phneglog = log1p(dfthesis$ACEsPhysNeg)
+skewness(dfthesis$phneglog)
+dfthesis$phablog = log1p(dfthesis$ACEsPhysAb)
+skewness(dfthesis$phablog)
+dfthesis$bmlog = log1p(dfthesis$ACEsBattMum)
+skewness(dfthesis$bmlog)
+dfthesis$divlog = log1p(dfthesis$ACEsDiv)
+skewness(dfthesis$divlog)
+dfthesis$incrlog = log1p(dfthesis$ACEsIncRel)
+skewness(dfthesis$incrlog)
+dfthesis$sualog = log1p(dfthesis$ACEsSubAb)
+skewness(dfthesis$sualog)
+dfthesis$sealog = log1p(dfthesis$ACEsSexAb)
+skewness(dfthesis$sealog)
+dfthesis$milog = log1p(dfthesis$ACEsMentIll)
+skewness(dfthesis$milog)
+
+#TTests
+#!For ACEs used the non transformed subscales bcs transf did not improve skew
+ttGroupPAM <- t.test(pamlog ~ Group, data=dfthesis)
+ttavoidance2 <-t.test(pamavoidance ~ Group, data=dfthesis)
+ttanx2 <- t.test(pamanxiety ~ Group, data=dfthesis)
+ttaces <- t.test(ACEslog ~ Group, data=dfthesis)
+ttemneg <- t.test(ACEsEmNeg ~ Group, data=dfthesis)
+ttemab <- t.test(ACEsEmAb ~ Group, data=dfthesis)
+ttphysab <-t.test(ACEsPhysAb ~ Group, data=dfthesis)
+ttphysneg <- t.test(ACEsPhysNeg ~ Group, data=dfthesis)
+ttdiv <- t.test(ACEsDiv ~ Group, data=dfthesis)
+ttbattmum <- t.test(ACEsBattMum ~ Group, data=dfthesis)
+ttinc <- t.test(ACEsIncRel ~ Group, data=dfthesis)
+ttSubAb <- t.test(ACEsSubAb ~ Group, data=dfthesis)
+ttsexab <- t.test(ACEsSexAb~ Group, data=dfthesis)
+ttmentill <- t.test(ACEsMentIll ~Group, data=dfthesis)
+
+#Adjusting pvals
+ps <- c(ttGroupPAM$p.value, ttanx$p.value, ttavoidance$p.value)
+adj.aces <- p.adjust(ps, method = "bonferroni")
+adj.aces <- format(adj.aces, scientific = FALSE)
+psnames <- c("PAMTOT", "PAMANX", "PAMAVOIDANCE")
+names(adj.aces) <- psnames
+adj.aces
+which(adj.aces < 0.05)
+
+ps2 <- c(ttaces$p.value, ttemab$p.value, ttemneg$p.value, ttphysab$p.value, ttphysneg$p.value, ttdiv$p.value, ttbattmum$p.value, ttinc$p.value, ttsexab$p.value, ttSubAb$p.value, ttmentill$p.value)
+adj.aces2 <- p.adjust(ps2, method = "bonferroni")
+adj.aces2 <- format(adj.aces2, scientific = FALSE)
+psnames2 <- c("ACEsTot", "ACEsEmAb", "EmNeg", "PhysAb", "PhysNeg", "Divorced Parents", "BattMum", "Incarcerated Relative", "Sexual Abuse", "Sub Abuse", "Family Menatl Illness")
+names(adj.aces2) <- psnames2
+adj.aces2
+which(adj.aces2 < 0.05)
+
+
+##########################
+#REGRESSIONS
+##########################
+################
+#CEntering GCT
+###############
+#aragorn$GCTcen = (2 *(aragorn$Global_Thickness - 2.416 )/(2.862-2.416 )) - 1
+#dfthesis$GCTcen = (2 *(dfthesis$Global_Thickness - 2.416 )/(2.862-2.416 )) - 1
+#CEntering PFCT
+#aragorn$PFCTcen = (2 *(aragorn$PFCT - 2.421 )/(2.858-2.421 )) - 1
+#dfthesis$PFCTcen = (2 *(dfthesis$PFCT - 2.416 )/(2.862-2.416 )) - 1
+
+###############################################
+#transformation log ACEs/pamtot + standardize  
+##############################################
+#dfthesis$ACEslog = log1p(dfthesis$ACEstot)
+#dfthesis$pamlog = log1p(dfthesis$pamtot)
+#dfthesis$ACEslogz<- (dfthesis$ACEslog - mean(dfthesis$ACEsTot)) / sd(dfthesis$ACEsTot)
+#dfthesis$pamlogz<- (dfthesis$pamlog - mean(dfthesis$pamtot)) / sd(dfthesis$pamtot)
+
+library(QuantPsyc)
+#PFCT
+lmP1<-lm(PFCTcen ~ Group + Gender*Age + ICV, data= aragorn) #aragorn is the dataset with the full 190 subjects
+summary(lmP1)
+lm.beta(lmP1) #to get standardized coefficients
+lmP2<-lm(PFCTcen ~ pamlogz+ Gender*Age + ICV, data= dfthesis)
+summary(lmP2)
+lmP2b<-lm(PFCTcen ~ pamavlog + pamanlog + Gender*Age + ICV, data= dfthesis)
+summary(lmP2b) #THIS WAS POST-HOC
+lm.beta(lmP2b)
+lmP3<-lm(PFCTcen ~ ACEslogz + Gender*Age + ICV, data= dfthesis)
+summary(lmP3)
+lmP4<-lm(PFCTcen ~ pamlogz + ACEslogz  + Gender*Age + ICV, data= dfthesis)
+summary(lmP4)
+lmP5<-lm(PFCTcen ~ pamlogz*Group + ACEslogz*Group + Gender*Age + ICV, data= dfthesis)
+summary(lmP5)
+
+#comparing models
+anova(lmP4, lmP5)
+anova(lmP2, lmP4)
+anova(lmP2, lmP2b)
+
+summ2<-summary(lmP2b) #FOR ANXIETY SUBSCALE done after inspection of which pvalues was significant
+coeff <- as.data.frame(summ2$coefficients)
+pv2<- p.adjust(coeff$'Pr(>|t|)', method="fdr")
+pv2
+which(pv2 < 0.05)
+
+#GCT
+lmG1<-lm(GCTcen ~ Group + Gender*Age + ICV, data= aragorn) 
+summary(lmG1)
+lmG2<-lm(GCTcen ~ pamlogz + Gender*Age + ICV, data= dfthesis)
+summary(lmG2)
+lmG3<-lm(GCTcen ~ ACEslogz + Gender*Age + ICV, data= dfthesis)
+summary(lmG3)
+lmG4<-lm(GCTcen ~ pamlogz + ACEslogz + Gender*Age + ICV, data= dfthesis)
+summary(lmG4)
+lmG5<-lm(GCTcen ~ pamlogz*Group + ACEslogz*Group + Gender*Age + ICV, data= dfthesis)
+summary(lmG5)
+anova(lmG4, lmG5)
+anova(lmG3, lmG4)
+
+#Check RESIDUALS PLOTS
+library(ggResidpanel)
+resid_panel(lmP1) +
+  label= c("residuals model PFCT ~ Group + Age + Gender")
+resid_panel(lmP2) +
+  labs(title="residuals model PFCT ~ PAM + Gender + Age")#models by Group
+resid_panel(lmP3) +
+  labs(title="residuals model PFCT ~ ACEsTot + Gender + Age")
+resid_panel(lmP4) +
+  labs(title="residuals model PFC ~ PAM + ACEsTot + Gender + Age")
+resid_panel(lmP5) +
+  labs(title="residuals model PFCT ~ pamtot*Group + ACEsTot*Group + Gender + Age")
+resid_panel(lmG1) +
+  labs(title="residuals model GCT ~ Group + Gender + Age")
+resid_panel(lmG2) +
+  labs(title="residuals model GCT ~ PAM + Gender + Age")
+resid_panel(lmG3) +
+  labs(title="residuals model GCT ~ ACEs + Gender + Age")
+resid_panel(lmG4) +
+  labs(title="residuals model GCT ~ PAM + ACEs + Gender + Age")
+resid_panel(lmG5) +
+  labs(title="residuals model GCT ~ pamtot*Group + ACEsTot*Group + Gender + Age")
+
+
+
+####################################################################
+#Graphical representations 
+####################################################################
+library(ggplot2)
+#ACEs ~ PFCx Thickness by Group
+sc1 <-ggplot(dfthesis, aes(x=ACEsTot, y=PFCT, color=Group)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(x="ACEs", y = "PFCT")
+
+#PAM ~ PFCx Thickness by Group
+sc2<- ggplot(dfthesis, aes(x=pamtot, y=PFCT, color=Group)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(x="PAM", y = "PFCT")
+
+#ACEs ~ PFCx Thickness across Groups
+scacr <-ggplot(dfthesis, aes(x=ACEsTot, y=PFCT, color= ACEsTot)) +
+  geom_point()+
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  labs(x="ACEs", y = "PFCT")+ 
+  scale_color_gradientn(colours = rainbow(5))
+
+#PAM ~ PFCx Thickness across Groups
+scacr2<-ggplot(dfthesis, aes(x=pamtot, y=PFCT, color=pamtot)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(x="PAM", y = "PFCT")+
+  scale_color_gradientn(colours = rainbow(5))
+
+ggarrange(scacr, sc1, scacr2, sc2 + rremove("x.text"), 
+          common.legend = FALSE, legend = "right",
+          ncol = 2, nrow = 2,
+          labels = c("A", "B", "C", "D"))
+
+ggarrange(scacr, scacr2 + rremove("x.text"), 
+          common.legend = FALSE, legend = "right",
+          ncol = 1, nrow = 2,
+          labels = c("A", "B"))
+
+#Global Cortical Thickness ~ ACEs
+bpgct<-ggplot(dfthesis, aes(x=ACEsTot, y=Global_Thickness, color=Group)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(x="ACEs", y = "GCT")
+
+#Global Cortical Thickness ~ PAM
+bpgct2<-ggplot(dfthesis, aes(x=pamtot, y=Global_Thickness, color=Group)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(x="PAM", y = "GCT")
+
+#Global Cortical Thickness ~ ACEs across Groups
+bpacr<-ggplot(dfthesis, aes(x=ACEsTot, y=Global_Thickness, color = ACEsTot)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_gradientn(colours = rainbow(5))+
+  labs(x="ACEs", y = "GCT")
+
+#Global Cortical Thickness ~ PAM across Groups
+bpacr2<-ggplot(dfthesis, aes(x=pamtot, y=Global_Thickness, color= pamtot)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_gradientn(colours = rainbow(5))+
+  labs(x="PAM", y = "GCT")
+
+ggarrange(bpacr, bpacr2 + rremove("x.text"), 
+          common.legend = FALSE, legend = "right",
+          ncol = 1, nrow = 2,
+          labels = c("A", "B"))
+
+ggarrange(bpacr, bpgct, bpacr2, bpgct2 + rremove("x.text"), 
+          common.legend = FALSE, legend = "right",
+          ncol = 2, nrow = 2,
+          labels = c("A", "B", "C", "D"))
+###################################################################################################################
+#Mediation Analysis
+###################################################################################################################
+
+########################
+#GCT
+########################
+
+library(lavaan)
+mediation.model <- '#direct effect 
+GCTcen ~ c*ACEslogz
+#mediator
+pamlogz ~ a*ACEslogz
+GCTcen ~ b*pamlogz
+#indirect effect
+ab := a*b
+#total effect
+total := c + (a*b)'
+
+fit.GCT<- sem(mediation.model, 
+                     data= dfthesis,
+              Group = "Group"
+)
+summary(fit.GCT, standardized = TRUE, fit.measures= TRUE)
+parameterEstimates(fit.GCT)
+med.df.GCT <- parameterEstimates(fit.GCT) #parameters estimates in a df
+
+
+########################
+#PFC
+########################
+library(lavaan)
+med.PFC <- '#direct effect 
+PFCTcen ~ z*ACEslogz
+#mediator
+pamlogz ~ d*ACEslogz
+PFCTcen ~ e*pamlogz
+#indirect effect
+de := d*e
+#total effect
+totalPFC := z + (d*e)'
+
+fitPFC <- sem(med.PFC, 
+                        data= dfthesis,
+                        Group= "Group"
+)
+summary(fitPFC, standardized = TRUE, fit.measures= TRUE)
+parameterEstimates(fitPFC)
+med.df.PFC <- parameterEstimates(fitPFC) #parameters estimates in a df
+
+
+#MEDIATION ACROSS GroupS FOR PFCT 
+#MEDIATION ACROSS GroupS
+mediationacrosspfct <- '#direct effect 
+PFCTcen ~ h*ACEslogz
+#mediator
+pamlogz ~ i*ACEslogz
+PFCTcen ~ l*pamlogz
+#indirect effect
+il := i*l
+#total effect
+totalacross := h + (i*l)'
+
+fit.acrosspfct<- sem(mediationacrosspfct, 
+                     data= dfthesis
+)
+summary(fit.acrosspfct, standardized = TRUE, fit.measures= TRUE)
+medacrosspfc <- parameterEstimates(fit.acrosspfct) #parameters estimates in a df
+
+#FOR GCT
+#MEDIATION ACROSS GroupS
+mediationacrossgct <- '#direct effect 
+GCTcen ~ h*ACEslogz
+#mediator
+pamlogz ~ i*ACEslogz
+GCTcen ~ l*pamlogz
+#indirect effect
+il := i*l
+#total effect
+totalacross := h + (i*l)'
+
+fit.acrossgct<- sem(mediationacrossgct, 
+                    data= dfthesis
+)
+summary(fit.acrossgct, standardized = TRUE, fit.measures= TRUE)
+medacrossgct <- parameterEstimates(fit.acrossgct) #parameters estimates in a df
+
+#MEDIATION PLOT
+library(diagram)
+data4 <- c(0, "'a'", 0,
+           0, 0, 0, 
+           "'b'", "'c'", 0)
+M4<- matrix (nrow=3, ncol=3, byrow = TRUE, data= data4)
+plot4<- plotmat (M4, pos=c(1,2), 
+                 name= c( "PAM","ACEs", "PFCT/GCT"), 
+                 box.type = "rect", box.size = 0.12, box.prop=0.5,  curve=0, main= "Mediation path")
+
+
+#LOGISTIC to further investigate whether they are meaningful predictors for being CHR 
+#with Group coded as 0=CONTROL, 1= CHR
+
+#############################################################################
+#How I calculated pseudo R2 (From Andy Field, "Discovering Statistics With R", 2007)
+#############################################################################
+
+logisticPseudoR2s <- function(LogModel) { 
+  dev <- LogModel$deviance  
+  nullDev <- LogModel$null.deviance  
+  modelN <- length(LogModel$fitted.values) 
+  R.l <-  1 -  dev / nullDev 
+  R.cs <- 1- exp ( -(nullDev - dev) / modelN) 
+  R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN)))) 
+  cat("Pseudo R^2 for logistic regression\n") 
+  cat("Hosmer and Lemeshow R^2", round(R.l, 3), "\n") 
+  cat("Cox and Snell R^2", round(R.cs, 3), "\n") 
+  cat("Nagelkerke R^2", round(R.n, 3),"\n")
+}
+#############################################################################
+
+#MODEL 1 WITH PAMtot and ACEsTOT
+model1 <- glm(Group ~ ACElogz + pamlogz, family = binomial, data= dfthesis)
+sum1<-summary(glm(Group ~ ACElogz + pamlogz, family = binomial, data= dfthesis))
+sum1 
+
+logisticPseudoR2s(model1) #pseudo R2 for logistic
+ORs1 = exp(model1$coefficients) #ODDS Ratio
+CONFINT1 = exp(confint(model1)) #confidence intervals
+se1 = sum1$coefficients[,2]
+pv1 = sum1$coefficients[,4]
+ORCONFINT1 =cbind(se1, ORs1, CONFINT1, pv1)
+
+h <- predict(model1, newdata=subset(dfthesis,select=c("Groupasf","ACEsTot","pamtot"), type="response"))
+hr <- prediction(h, dfthesis$Group)
+hrf <- performance(hr, measure = "tpr", x.measure = "fpr")
+plot(hrf)
+auc1 <- performance(hr, measure = "auc")
+auc.1 <- auc1@y.values[[1]]
+auc.1
+library(car)
+vif(model1) 
+1/vif(model1)
+
+model1Chi <- model1$null.deviance - model1$deviance
+model1Chi
+chi1df <- model1$df.null - model1$df.residual 
+chi1df
+chisq.prob1 <- 1 - pchisq(model1Chi, chi1df)
+chisq.prob1
+format(chisq.prob1, scientific= FALSE)
+model1Chi ; chi1df ; chisq.prob1
+
+#MODEL with all subscales but no interaction
+model2 <- glm(Group ~ pamavoidance + pamanxiety + ACEsEmNeg + ACEsEmAb + ACEsPhysNeg + ACEsPhysAb + ACEsSubAb + ACEsSexAb + ACEsMentIll + ACEsBattMum + ACEsIncRel + ACEsDiv, family= binomial, data= dfthesis)
+sum2 <- summary(glm(Group ~ pamavoidance + pamanxiety + ACEsEmNeg + ACEsEmAb + ACEsPhysNeg + ACEsPhysAb + ACEsSubAb + ACEsSexAb + ACEsMentIll + ACEsBattMum + ACEsIncRel + ACEsDiv, family= binomial, data= dfthesis))
+sum2
+anova(model2, test="Chisq")
+
+logisticPseudoR2s(model2) #pseudo R2 for logistic
+ORs2 = exp(model2$coefficients) #ODDS Ratio
+CONFINT2 = exp(confint(model2)) #confidence intervals
+
+se2 = sum2$coefficients[,2]
+pv2 = sum2$coefficients[,4]
+ORCONFINT2 =cbind(se2, ORs2, CONFINT2, pv2)
+
+#ROCR curve
+h2 <- predict(model2, newdata=subset(dfthesis,select=c("pamavoidance", "pamanxiety", "ACEsEmNeg", "ACEsEmAb", "ACEsPhysNeg", "ACEsPhysAb", "ACEsSubAb", "ACEsSexAb", "ACEsMentIll", "ACEsBattMum", "ACEsIncRel", "ACEsDiv"), type="response"))
+hr2 <- prediction(h2, dfthesis$Group)
+hrf2 <- performance(hr2, measure = "tpr", x.measure = "fpr")
+plot(hrf2)
+auc2 <- performance(hr2, measure = "auc")
+auc.2 <- auc2@y.values[[1]]
+auc.2
+
+library(car)
+vif(model2) 
+1/vif(model2)
+
+model2Chi <- model2$null.deviance - model2$deviance
+chi2df <- model2$df.null - model2$df.residual 
+chisq.prob2 <- 1 - pchisq(model2Chi, chi2df)
+format(chisq.prob2, scientific= FALSE)
+model2Chi ; chi2df ; chisq.prob2
+
+#COMPARE WITH MODEL 1 
+ChiDIffm1m2 <- model1$deviance - model2$deviance 
+chidfm1m2 <- model1$df.residual - model2$df.residual 
+chisq.probm1m2 <- 1 - pchisq(ChiDIffm1m2, chidfm1m2) 
+ChiDIffm1m2; chidfm1m2; chisq.probm1m2
+
+#Model with PAMTOT and ACESTOT and INTERACTION
+model3 <- glm(Group ~ ACEslogz*pamlogz, family= 'binomial', data= dfthesis) 
+sum3 <- summary(glm(Group ~ ACEslogz*pamlogz, family=binomial, data= dfthesis))
+sum3
+#Pseudo R2 computation
+logisticPseudoR2s(model3) #pseudo R2 for logistic
+ORs3 = exp(model3$coefficients) #ODDS Ratio
+CONFINT3 = exp(confint(model3)) #confidence intervals
+se3 = sum3$coefficients[,2]
+pv3 = sum3$coefficients[,4]
+ORCONFINT3 =cbind(se3, ORs3, CONFINT3, pv3)
+
+#ANOVA to see if adding coefficients significant
+anova(model3, test="Chisq")
+
+#ChiSquare of the model
+model3Chi <- model3$null.deviance - model3$deviance
+chi3df <- model3$df.null - model3$df.residual 
+chisq.prob3 <- 1 - pchisq(model3Chi, chi3df)
+format(chisq.prob3, scientific= FALSE)
+model3Chi ; chi3df ; chisq.prob3
+
+#COMPARE WITH MODEL 1 without interaction
+ChiDIffm1m3 <- model1$deviance - model3$deviance 
+chidfm1m3 <- model1$df.residual - model3$df.residual 
+chisq.probm1m3 <- 1 - pchisq(ChiDIffm1m3, chidfm1m3) 
+ChiDIffm1m3; chidfm1m3; chisq.probm1m3
+
+#COMPARE WITH MODEL 2
+ChiDIffm2m3 <- model3$deviance - model2$deviance 
+chidfm2m3 <- model3$df.residual - model2$df.residual 
+chisq.probm2m3 <- 1 - pchisq(ChiDIffm2m3, chidfm2m3) 
+ChiDIffm2m3; chidfm2m3; chisq.probm2m3
+
+#MULTICOLLINEARITY
+library(car)
+library(ROCR)
+vif(model3) 
+1/vif(model3)
+h3 <- predict(model3, newdata=subset(dfthesis,select=c("pamtot", "ACEsTot"), type="response"))
+hr3 <- prediction(h3, dfthesis$Group)
+hrf3 <- performance(hr3, measure = "tpr", x.measure = "fpr")
+plot(hrf3)
+auc3 <- performance(hr3, measure = "auc")
+auc.3 <- auc3@y.values[[1]]
+auc.3
+
+#Calculating accuracy of model 3
+probabilities <- model3 %>% predict(dfthesis, type = "response")
+head(probabilities)
+contrasts(dfthesis$Group)
+predicted.classes <- ifelse(probabilities > 0.5, "CHR", "CONTROL")
+head(predicted.classes)
+mean(predicted.classes == dfthesis$Group)
+
+###########
+#POST HOC
+##########
+
+#transf pam in 3 levels
+ba <- dfthesis$pamtot
+dfthesis$pam_3g <-
+  case_when(ba < mean(ba)-sd(ba) ~ "low",
+            ba > mean(ba)+sd(ba) ~ "high",
+            ba < mean(ba)+sd(ba) & ba > mean(ba)-sd(ba) ~ "average")
+count(dfthesis, "pam_3g")
+
+library(dplyr)
+count_pam<-dfthesis %>% group_by(Group) %>% count(pam_3g)
+count_pam
+
+modelph <- glm(Group ~ ACEslogz*pam_3g, family=binomial, data= dfthesis) 
+summph<-summary(modelph)
+exp(modelph$coefficients) 
+ORs4 = exp(modelph$coefficients) #ODDS Ratio
+CONFINT4 = exp(confint(modelph)) #confidence intervals
+se4 = summph$coefficients[,2]
+pv4 = summph$coefficients[,4]
+ORCONFINT4 =cbind(se4, ORs4, CONFINT4, pv4)
+
+ChiDIffm3mph <- model3$deviance - modelph$deviance 
+chidfm3mph <- model3$df.residual - modelph$df.residual 
+chisq.probm3mph <- 1 - pchisq(ChiDIffm3mph, chidfm3mph) 
+ChiDIffm3mph; chidfm3mph; chisq.probm3mph
+
+#Boxplot of model 3 logistic regression
+library(ggplot2)
+ggplot(dfthesis, aes(x=pam_3g, y=ACEsTot, fill=Group)) +
+  geom_boxplot()+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(title="Boxplots model different PAM levels Logistic regression",x="PAM", y = "ACEs")+
+  scale_x_discrete(limits=c("low", "average", "high"))
+
+#Effect sizes model 1 and 3
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(ggplot2)
+library(ggpubr)
+lr1<-plot_model(model1, sort.est = TRUE, title = "Model 1 estimates", show.values = TRUE, value.offset = .3)
+lr2<-plot_model(model3, sort.est = TRUE, title = "Model 3 estimates", show.values = TRUE, value.offset = .3)
+ggarrange(lr1, lr2 + rremove("x.text"), 
+          common.legend = FALSE, legend = "right",
+          ncol = 2, nrow = 1,
+          labels = c("A", "B"))
+
+#graphical repres effects of pam subscales on PFCT 
+library(ggplot2)
+library(ggpubr)
+avonobyGroup<-ggplot(dfthesis, aes(x=pamavoidance, y= PFCT)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  labs(x="Avoidance", y = "PFCT")
+anxnobyGroup<-ggplot(dfthesis, aes(x=pamanxiety, y=PFCT)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  labs(x="Anxiety", y = "PFCT")
+
+ggarrange(avonobyGroup, anxnobyGroup + rremove("x.text"), 
+          common.legend = FALSE, legend = "none",
+          ncol = 2, nrow = 1,
+          labels = c("A", "B"))
+
+avobyGroup<-ggplot(dfthesis, aes(x=pamavoidance, y= PFCT, color= Group)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(x="Avoidance", y = "PFCT")
+anxbyGroup<-ggplot(dfthesis, aes(x=pamanxiety, y=PFCT, color= Group)) +
+  geom_point() + 
+  geom_smooth(method="lm", se= TRUE, na.rm=TRUE)+
+  scale_color_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  scale_fill_manual(values=c("#00C19C","#CF78FF","#D12600"))+
+  labs(x="Anxiety", y = "PFCT")
+
+ggarrange(avobyGroup, anxbyGroup + rremove("x.text"), 
+          common.legend = TRUE, legend = "bottom",
+          ncol = 2, nrow = 1,
+          labels = c("A", "B"))
